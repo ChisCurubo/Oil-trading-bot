@@ -1,0 +1,15 @@
+name: oil_bot_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - requests
+  - pip
+  - pip:
+    - python-dotenv
+    - yfinance    # Cliente de datos del mercado (Yahoo Finance)
+    - textblob    # Análisis de sentimiento NLP
+    - lxml        # Requerido por yfinance para parsing
