@@ -1,0 +1,22 @@
+# Entornos Virtuales
+env/
+venv/
+**/.env
+.venv/
+conda-env/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs y bases de datos locales (opcional pero recomendado no subirlos)
+logs/
+*.log
+
+# Entornos de desarrollo
+.vscode/
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints

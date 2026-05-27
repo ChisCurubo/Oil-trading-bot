@@ -53,7 +53,8 @@ def run_scalper_monitor():
             
             # 1. Datos
             df_macro, df_micro = get_wti_mtf_data()
-            if df_macro is None or df_micro is None:
+            if df_macro is None or df_micro is None or len(df_micro) < 2:
+                print("⏳ Esperando datos suficientes del mercado...")
                 time.sleep(10); continue
 
             # 2. Indicadores (usamos los mismos para no romper la estructura, pero la estrategia usa pocos)
@@ -131,11 +132,11 @@ def run_scalper_monitor():
                 
                 # Evaluación de salida (ganar poco / perder poco)
                 if "CALL" in tipo:
-                    if candle['High'] >= datos_trade['TP']: hit_tp = True
-                    elif candle['Low'] <= datos_trade['SL']: hit_sl = True
+                    if candle['Close'] >= datos_trade['TP']: hit_tp = True
+                    elif candle['Close'] <= datos_trade['SL']: hit_sl = True
                 elif "PUT" in tipo:
-                    if candle['Low'] <= datos_trade['TP']: hit_tp = True
-                    elif candle['High'] >= datos_trade['SL']: hit_sl = True
+                    if candle['Close'] <= datos_trade['TP']: hit_tp = True
+                    elif candle['Close'] >= datos_trade['SL']: hit_sl = True
 
                 if hit_tp or hit_sl:
                     precio_salida = datos_trade['TP'] if hit_tp else datos_trade['SL']

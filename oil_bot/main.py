@@ -53,7 +53,8 @@ def run_live_monitor():
             
             # 1. Obtención de Datos
             df_macro, df_micro = get_wti_mtf_data()
-            if df_macro is None or df_micro is None:
+            if df_macro is None or df_micro is None or len(df_macro) < 2 or len(df_micro) < 2:
+                print("⏳ Esperando datos suficientes del mercado...")
                 time.sleep(10); continue
 
             # 2. Cálculos Técnicos
@@ -145,11 +146,11 @@ def run_live_monitor():
                 hit_tp = False; hit_sl = False
                 tipo = datos_trade['Tipo']
                 if tipo == "COMPRA":
-                    if candle['High'] >= datos_trade['TP']: hit_tp = True
-                    elif candle['Low'] <= datos_trade['SL']: hit_sl = True
+                    if candle['Close'] >= datos_trade['TP']: hit_tp = True
+                    elif candle['Close'] <= datos_trade['SL']: hit_sl = True
                 elif tipo == "VENTA":
-                    if candle['Low'] <= datos_trade['TP']: hit_tp = True
-                    elif candle['High'] >= datos_trade['SL']: hit_sl = True
+                    if candle['Close'] <= datos_trade['TP']: hit_tp = True
+                    elif candle['Close'] >= datos_trade['SL']: hit_sl = True
 
                 if hit_tp or hit_sl:
                     precio_salida = datos_trade['TP'] if hit_tp else datos_trade['SL']
